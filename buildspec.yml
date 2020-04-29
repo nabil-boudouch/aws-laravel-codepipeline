@@ -9,14 +9,25 @@ phases:
     commands:
       - echo "Build started on `date`"
       - echo "Installing composer deps"
-      - composer install
+#      - rm -rf /vendor
+      - composer install --no-dev --optimize-autoloader
+      - ls
+      - pwd
+      - php artisan config:cache
+#      - mv target/deploy ./
+
+#      - php artisan route:cache
+      - php artisan view:cache
+      - echo $CODEBUILD_SRC_DIR
+#      - php artisan optimize
+#      - php artisan route:cache
+#      - php artisan cache:clear
 #      - php artisan migrate
 #      - php artisan cache:clear
 
   post_build:
     commands:
-      - echo "Build completed on `date`"
+      - echo "Build completed"
 artifacts:
-  type: zip
   files:
     - '**/*'
